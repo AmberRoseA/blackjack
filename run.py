@@ -4,8 +4,12 @@ import random
 """
 Deck of cards and values
 """
+deck = []
+suits = ["♠", "♥", "♦", "♣"]
+card_nums = ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
+            "10", "J", "Q", "K"]
 
-
+player_hand = []
 """
 Dealing the cards
 """
