@@ -1,3 +1,27 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+import random
+
+"""
+Deck of cards and values
+"""
+
+
+"""
+Dealing the cards
+"""
+
+
+"""
+Calculate the totalof each hand
+"""
+
+
+"""
+Check the winner
+"""
+
+# Game Welcome/ start/ rules of the game 
+["♠", "♥", "♦", "♣"]
+
+
+
+
