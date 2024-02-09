@@ -4,32 +4,53 @@ class Card:
     def __init__(self, suit, face):
         self.suit = suit
         self.face = face
+
     def __str__(self):
         return f"{self.face} of {self.suit}"    
 """
 Deck of cards and values
 """
-cards = []
-suits = ["♠", "♥", "♦", "♣"]
-faces = ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
-            "10", "J", "Q", "K"]
+class Deck:
+    def __init__(self):
+        self.cards = []
+        self.reset()
 
-for suit in suits:
-    for face in faces:
-        cards.append([suit, face])
+    def reset(self):
+        self.cards = [Card(suit, face) for suit in ["♠", "♥", "♦", "♣"]
+                    for face in ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
+                "10", "J", "Q", "K"]]   
+        random.shuffle(self.cards)
 
-def shuffle():
-    random.shuffle(cards)
+    def deal(self):
+        if len(self.cards) > 0:
+            return self.cards.pop()
+        else:
+            print("No more cards in the deck.")
+            return None                 
+    
+    """
+    cards = []
+    suits = ["♠", "♥", "♦", "♣"]
+    faces = ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
+                "10", "J", "Q", "K"]
+    """            
 
-def deal(number):
-    dealt_cards = []
-    for x in range(number):
-        card = cards.pop()
-        dealt_cards.append(card)
-    return dealt_cards
+    for suit in suits:
+        for face in faces:
+            cards.append([suit, face])
 
-shuffle()
-print(cards)
+    def shuffle():
+        random.shuffle(cards)
+
+    def deal(number):
+        dealt_cards = []
+        for x in range(number):
+            card = cards.pop()
+            dealt_cards.append(card)
+        return dealt_cards
+
+    shuffle()
+    print(cards)
 
 """
 Dealing the cards
