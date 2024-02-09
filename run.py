@@ -6,10 +6,8 @@ class Card:
         self.face = face
 
     def __str__(self):
-        return f"{self.face} of {self.suit}"    
-"""
-Deck of cards and values
-"""
+        return f"{self.face}{self.suit}"    
+
 class Deck:
     def __init__(self):
         self.cards = []
@@ -17,8 +15,8 @@ class Deck:
 
     def reset(self):
         self.cards = [Card(suit, face) for suit in ["♠", "♥", "♦", "♣"]
-                    for face in ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
-                "10", "J", "Q", "K"]]   
+                      for face in ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
+                                   "10", "J", "Q", "K"]]   
         random.shuffle(self.cards)
 
     def deal(self):
@@ -28,14 +26,13 @@ class Deck:
             print("No more cards in the deck.")
             return None                 
 
-
 class Hand:
     def __init__(self, name):
         self.cards = []
         self.name = name
 
     def add_card(self, card):
-        sefl.cards.append(card)
+        self.cards.append(card)
 
     def get_value(self):
         value = 0
@@ -51,8 +48,8 @@ class Hand:
 
         while value > 21 and num_aces:
             value -= 10
-            num_aces -= 1            
-            return value     
+            num_aces -= 1
+        return value     
 
     def display(self, hide_dealer_first_card=False):
         print(f"{self.name}'s Hand")  
@@ -66,28 +63,24 @@ class Hand:
             print("Total value:", self.get_value())
             print()                             
 
-
-
-
-# Game Welcome/ start/ rules of the game 
 class TheGame:
     def __init__(self):
-        delf.deck = Deck()
+        self.deck = Deck()
 
-    def start_game():
+    def start_game(self):
         while True:
             print("This is Blackjack!")
             print("The goal of the game is to get as close to 21 as possible without going over")
             print("You will be dealt two cards, and you can choose to Hit or Stick.")
 
-            player_name = input("Enter players name: \n")
-            ready_to_start = input(f"Are you ready to start, {player_name} ?(y/n) \n")
+            player_name = input("Enter player's name: \n")
+            ready_to_start = input(f"Are you ready to start, {player_name}? (y/n) \n")
 
             if ready_to_start == "y":
                 print("Let's start the game!")
-                return TheGame
             elif ready_to_start == "n":
                 print("Maybe next time, Goodbye")
+                return
             else:
                 print("Invalid input. please enter 'y' or 'n'.")
 
@@ -95,9 +88,7 @@ class TheGame:
             dealer_hand = Hand("Dealer")
 
             # Deal first two card
-
-
-            for _ in range(2)
+            for _ in range(2):
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
@@ -106,7 +97,7 @@ class TheGame:
 
             # Players turn
             while player_hand.get_value() < 21:
-                choice = input("Hit or Stick? (h/s: ".lower())
+                choice = input("Hit or Stick? (h/s): ").lower()
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand.display()
@@ -130,17 +121,17 @@ class TheGame:
             elif dealer_score > 21:
                 print("You WIN!! ... Dealer BUST!")  
             elif player_score == dealer_score:
-                ("Tied Game")
+                print("Tied Game")
             elif player_score > dealer_score:
-                print(YOU WIN!!)
+                print("YOU WIN!!")
             else:
-                print(Dealer WINS!!)              
-            # Ask player to play again     
+                print("Dealer WINS!!")              
 
-    start_game()                
+            play_again = input("Do you want to play again? (y/n): ").lower()
+            if play_again != "y":
+                print("Thanks for playing!")
+                break
 
-
-
-
-
-
+if __name__ == "__main__":
+    game = TheGame()
+    game.start_game()              
