@@ -120,15 +120,24 @@ class Game:
             print("You'll be dealt two cards and can choose to Hit or Stick.")
 
             player_name = input("Enter player's name: ")
+            if not player_name:
+                print("Please enter a name to start the game.")
+                continue
+
             ready_to_start = input(f"Are you ready to start, {player_name}? (y/n): ").lower()
+            
+            while ready_to_start not in ['y', 'n']:
+                print("Invalid input. Please enter 'y' or 'n'.")
+                ready_to_start = input(f"Are you ready to start, {player_name}? (y/n): ").lower()
 
             if ready_to_start == "y":
                 print("Let's start the game!")
             elif ready_to_start == "n":
                 print("Maybe next time. Goodbye!")
-                return
+                break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
+                
 
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
@@ -173,10 +182,15 @@ class Game:
             else:
                 print("Dealer WINS!")
 
-            play_again = input("Do you want to play again? (y/n): ").lower()
-            if play_again != "y":
-                print("Thanks for playing!")
-                break
+            while True:
+                play_again = input("Do you want to play again? (y/n): ").lower()
+                if play_again == "y":
+                    break
+                elif play_again == "n":
+                    print("Thanks for playing!")
+                    break
+                else:
+                    print("Invalid entry. Please enter 'y' or 'n'.")
 
 
 if __name__ == "__main__":
