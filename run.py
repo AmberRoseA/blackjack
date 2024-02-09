@@ -54,7 +54,7 @@ class Hand:
             num_aces -= 1            
             return value     
 
-    def display(self):
+    def display(self, hide_dealer_first_card=False):
         print(f"{self.name}'s Hand")  
         for i, card in enumerate(self.cards):
             if hide_dealer_first_card and i == 0:
@@ -97,14 +97,32 @@ class TheGame:
             # Deal first two card
 
 
-            for in range(2)
+            for _ in range(2)
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
             player_hand.display()
-            dealer_hand.display(hide_dealer_first_card=True)    
+            dealer_hand.display(hide_dealer_first_card=True)  
+
             # Players turn
+            while player_hand.get_value() < 21:
+                choice = input("Hit or Stick? (h/s: ".lower())
+                if choice == "h":
+                    player_hand.add_card(self.deck.deal())
+                    player_hand.display()
+                elif choice == "s":
+                    break
+                else:
+                    print("Invalid Entry!")
+
+            player_score = player_hand.get_value()        
             # Dealers turn
+            dealer_hand.display()
+            while dealer_hand.get_value() < 17:
+                dealer_hand.add_card(self.deck.deal())
+                dealer_hand.display()
+
+            dealer_score = dealer_hand.get_value()
             # Check winner
             # Ask player to play again     
 
