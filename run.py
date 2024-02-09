@@ -96,8 +96,13 @@ class TheGame:
 
             # Deal first two card
 
-            player_hand.add_card(self.deck.deal())
-            dealer_hand.add_card(self.deck.deal())
+
+            for in range(2)
+                player_hand.add_card(self.deck.deal())
+                dealer_hand.add_card(self.deck.deal())
+
+            player_hand.display()
+            dealer_hand.display(hide_dealer_first_card=True)    
             # Players turn
             # Dealers turn
             # Check winner
