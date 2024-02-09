@@ -5,6 +5,10 @@ FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
 
 class Card:
+    """
+    Class to combine the suit and face,
+    to show as one card
+    """
     def __init__(self, suit, face):
         self.suit = suit
         self.face = face
@@ -14,15 +18,28 @@ class Card:
 
 
 class Deck:
+    """
+    A Class to represent the deck of cards.
+    Making a 52 card deck
+    Removes card from deck onces it has been dealt so does not deal again.
+    """
     def __init__(self):
         self.cards = []
         self.reset()
 
     def reset(self):
+        """
+        Reset the deck by creating a new set of cards.
+        Also shuffling them. 
+        """
         self.cards = [Card(suit, face) for suit in SUITS for face in FACES]
         random.shuffle(self.cards)
 
     def deal(self):
+        """
+        Deals the cards from the deck,
+        If deck becomes empty returns None.
+        """
         if len(self.cards) > 0:
             return self.cards.pop()
         else:
@@ -31,6 +48,11 @@ class Deck:
 
 
 class Hand:
+    """
+    Class to represent a hand of cards.
+    List to store cards in the hand.
+    Name associated with the hand.
+    """
     def __init__(self, name):
         self.cards = []
         self.name = name
@@ -39,6 +61,9 @@ class Hand:
         self.cards.append(card)
 
     def get_value(self):
+        """
+        Calculates the hands total value.
+        """
         value = 0
         num_aces = 0
         for card in self.cards:
@@ -56,6 +81,10 @@ class Hand:
         return value
 
     def display(self, hide_dealer_first_card=False):
+        """
+        Displays the players hand
+        Hides one card of dealers hand on initial first deal.
+        """
         print(f"{self.name}'s Hand")
         for i, card in enumerate(self.cards):
             if hide_dealer_first_card and i == 0:
@@ -68,11 +97,23 @@ class Hand:
             print()
 
 
-class TheGame:
+class Game:
+    """
+    Class representing the Blackjack game.
+    Asks for input of player name and if they are ready to play.
+    Ask player if they want to play again.
+    Starts the Game
+    creates rules for hit or stick 
+    """
     def __init__(self):
         self.deck = Deck()
 
     def start_game(self):
+        """
+        Starts the game loop, Shows name of game and rules of the game.
+        Ask for players name and if they are ready to start.
+        Deals cards and requests player enter information to hit or stick (h/s).
+        """
         while True:
             print("Welcome to Blackjack!")
             print("The goal is to get as close to 21 as possible without going over.")
@@ -139,5 +180,5 @@ class TheGame:
 
 
 if __name__ == "__main__":
-    game = TheGame()
+    game = Game()
     game.start_game()
