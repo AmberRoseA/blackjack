@@ -3,16 +3,27 @@ import random
 """
 Deck of cards and values
 """
-deck = []
+cards = []
 suits = ["♠", "♥", "♦", "♣"]
-cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
+faces = ["A", "2", "3", "4", "5", "6", "7", "8", "9", 
             "10", "J", "Q", "K"]
 
 for suit in suits:
-    for card in cards:
-        deck.append([suit, card])
+    for face in faces:
+        cards.append([suit, face])
 
-print(deck)
+def shuffle():
+    random.shuffle(cards)
+
+def deal(number):
+    dealt_cards = []
+    for x in range(number):
+        card = cards.pop()
+        dealt_cards.append(card)
+    return dealt_cards
+
+shuffle()
+print(cards)
 
 """
 Dealing the cards
