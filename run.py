@@ -112,11 +112,11 @@ class Game:
         """
         Starts the game loop, Shows name of game and rules of the game.
         Ask for players name and if they are ready to start.
-        Deals cards and requests player enter information to hit or stick (h/s).
+        Deals cards, requests player enter information to hit or stick (h/s).
         """
         while True:
             print("Welcome to Blackjack!")
-            print("The goal is to get as close to 21 as possible without going over.")
+            print("The goal is to get as close to 21 as possible.")
             print("You'll be dealt two cards and can choose to Hit or Stick.")
 
             player_name = input("Enter player's name: ")
@@ -124,21 +124,19 @@ class Game:
                 print("Please enter a name to start the game.")
                 continue
 
-            ready_to_start = input(f"Are you ready to start, {player_name}? (y/n): ").lower()
-            
-            while ready_to_start not in ['y', 'n']:
+            ready_start = input(f"Ready to start, {player_name}?(y/n):").lower()  
+            while ready_start not in ['y', 'n']:
                 print("Invalid input. Please enter 'y' or 'n'.")
-                ready_to_start = input(f"Are you ready to start, {player_name}? (y/n): ").lower()
+                ready_start = input(f"Ready to start, {player_name}?(y/n):").lower()
 
-            if ready_to_start == "y":
+            if ready_start == "y":
                 print("Let's start the game!")
-            elif ready_to_start == "n":
+            elif ready_start == "n":
                 print("Maybe next time. Goodbye!")
                 break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
-                
-
+            
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
 
@@ -183,7 +181,7 @@ class Game:
                 print("Dealer WINS!")
 
             while True:
-                play_again = input("Do you want to play again? (y/n): ").lower()
+                play_again = input("Want to play again? (y/n): ").lower()
                 if play_again == "y":
                     break
                 elif play_again == "n":
