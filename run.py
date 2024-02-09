@@ -123,7 +123,18 @@ class TheGame:
                 dealer_hand.display()
 
             dealer_score = dealer_hand.get_value()
+
             # Check winner
+            if player_score > 21:
+                print("BUST!! ... Dealer wins")
+            elif dealer_score > 21:
+                print("You WIN!! ... Dealer BUST!")  
+            elif player_score == dealer_score:
+                ("Tied Game")
+            elif player_score > dealer_score:
+                print(YOU WIN!!)
+            else:
+                print(Dealer WINS!!)              
             # Ask player to play again     
 
     start_game()                
