@@ -1,5 +1,11 @@
 import random
 
+class Card:
+    def __init__(self, suit, face):
+        self.suit = suit
+        self.face = face
+    def __str__(self):
+        return f"{self.face} of {self.suit}"    
 """
 Deck of cards and values
 """
@@ -40,11 +46,11 @@ Check the winner
 """
 
 # Game Welcome/ start/ rules of the game 
-
+"""
 def start_game():
-    """
+   
     Start Game and explains the rules
-    """
+   
     print("This is Blackjack !!!")
     print("The goal of the game is to get as close to 21 as possible without going over")
     print("You will be dealt two cards, and you can choose to hit or stick.")
@@ -63,7 +69,7 @@ def start_game():
 
 start_game()                
 
-
+"""
 
 
 
