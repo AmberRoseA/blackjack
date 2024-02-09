@@ -46,7 +46,25 @@ class Hand:
             elif card.face == "A":
                 value += 11
                 num_aces += 1
-            return value                
+            else:
+                value += int(card.face)
+
+        while value > 21 and num_aces:
+            value -= 10
+            num_aces -= 1            
+            return value     
+
+    def display(self):
+        print(f"{self.name}'s Hand")  
+        for i, card in enumerate(self.cards):
+            if hide_dealer_first_card and i == 0:
+                print("?? Hidden Card ??")
+            else:
+                print(card)
+
+        if not hide_dealer_first_card:
+            print("Total value:", self.get_value())
+            print()                             
 
 
 
@@ -73,10 +91,13 @@ class TheGame:
             else:
                 print("Invalid input. please enter 'y' or 'n'.")
 
-            player_hand =
-            dealer_hand =
+            player_hand = Hand(player_name)
+            dealer_hand = Hand("Dealer")
 
             # Deal first two card
+
+            player_hand.add_card(self.deck.deal())
+            dealer_hand.add_card(self.deck.deal())
             # Players turn
             # Dealers turn
             # Check winner
