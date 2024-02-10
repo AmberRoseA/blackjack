@@ -119,6 +119,8 @@ class Game:
             print("The goal is to get as close to 21 as possible.")
             print("You'll be dealt two cards and can choose to Hit or Stick.")
 
+            data_str = input("Enter your data here: \n")
+
             player_name = input("Enter player's name: ")
             if not player_name:
                 print("Please enter a name to start the game.")
