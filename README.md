@@ -104,3 +104,16 @@ Descrip
 ## Deployment
 
 ## Credits 
+
+First initial insporation of the game of blackjack on python 
+    * https://www.youtube.com/watch?v=aryte85bt_M&t=28s
+    * https://www.youtube.com/watch?v=mpL0Y01v6tY 
+
+For more understanding on code I needed 
+    * https://www.w3schools.com/python/ref_func_enumerate.asp
+    * https://www.w3schools.com/python/ref_list_pop.asp 
+
+Code Institute for template used, example of READMe file and demo of battleships 
+    * (https://github.com/Code-Institute-Org/p3-template)
+    * https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+PE_PAGPPF+2021_Q2/courseware/b3378fc1159e43e3b70916fdefdfae51/605f34e006594dc4ae19f5e60ec75e2e/
+    * https://p3-battleships.herokuapp.com/
