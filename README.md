@@ -90,7 +90,12 @@ Descrip
 * Implement more rules common in the game, as this is a simplified version it is missing some elements such as  
 
 ## Data Model
+
 ### Flowcharts
+
+To map out the logic of the code needed for this app I used [**Lucidchart**](https://www.lucidchart.com) to create a visual flowchart of the functions I needed to implement.
+
+![blackjack_flowchart](assets/doc/blackjackflowchart.jpeg)
 
 ## Testing
 ### Bugs
@@ -98,6 +103,7 @@ Descrip
 ### Functional Testing
 
 ## Tools and Technologies
+https://www.lucidchart.com/pages/landing/flowchart-software?utm_source=google&utm_medium=cpc&utm_campaign=_chart_en_tier1_mixed_search_brand_exact_&km_CPC_CampaignId=1490375427&km_CPC_AdGroupID=55688909657&km_CPC_Keyword=lucidchart%20flowchart&km_CPC_MatchType=e&km_CPC_ExtensionID=&km_CPC_Network=g&km_CPC_AdPosition=&km_CPC_Creative=442433235983&km_CPC_TargetID=kwd-308413304100&km_CPC_Country=9180640&km_CPC_Device=c&km_CPC_placement=&km_CPC_target=&gad_source=1&gclid=CjwKCAiAq4KuBhA6EiwArMAw1F98cr6ZaLGi-B-d5MNtcyfwjIq4FRG-Tb2iKqocwQjWJJ8Y-rU_hBoCCUEQAvD_BwE for flowchart
 ### Version Control
 ### Imports
 
