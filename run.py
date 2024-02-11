@@ -13,7 +13,7 @@ class Card:
         self.face = face
 
     def __str__(self):
-        return f"{self.face}{self.suit}"
+        return f"{self.face} {self.suit}"
 
 
 class Deck:
@@ -79,6 +79,19 @@ class Hand:
         """ Displays the players hand
         Hides one card of dealers hand on initial first deal.
         """
+        row = ["", "", "", "", ""]  # Text to display on each row.
+
+        for card in self.cards:
+            rows[0] += " ___  "  # Top line of card.
+            if hide_dealer_first_card and card == self.cards[0]:
+                rows[1] += "|###| "
+                rows[2] += "|###| "
+                rows[3] += "|###| "
+            else:
+                rows[1] += "|{} | ".format(card.face.ljust(2))
+                rows[2] += "| {} | ".format(card.suit)
+                rows[3] += "|_{}| ".format(card.face.rjust(2, "_"))
+                
         print(f"{self.name}'s Hand")
         for i, card in enumerate(self.cards):
             if hide_dealer_first_card and i == 0:
