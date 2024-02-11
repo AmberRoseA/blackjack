@@ -105,7 +105,7 @@ class Game:
     Starts the Game
     creates rules for hit or stick 
     """
-    def print_msg_box(msg, indent=1, width=None, title=None): #THis code was taken from 
+    def print_msg_box(msg, indent=1, width=None, title=None): #This code was taken from stackoverflow.com link in README.md
         """Print message-box with optional title."""
         lines = msg.split('\n')
         space = " " * indent
@@ -125,7 +125,7 @@ class Game:
       "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
       "Good Luck !"
 
-    print_msg_box(msg=msg, indent=5, title='Welcome to Blackjack Blast!:')
+    print_msg_box(msg=msg, indent=5, title="Welcome to Blackjack Blast!:")
 
 
     def __init__(self):
@@ -133,21 +133,24 @@ class Game:
 
     def start_game(self):
         """
-        Starts the game loop, Shows name of game and rules of the game.
+        Starts the game loop,
         Ask for players name and if they are ready to start.
+        If entered invalid command will request again/ wont start game until done so.
         Deals cards, requests player enter information to hit or stick (h/s).
+        Checks for winner of game or if a player got 21 or Bust.
+        Asks player if they want to play again.
         """
         while True:
-            player_name = input("Enter your name: ")
+            player_name = input("Enter your name: \n")
             if not player_name:
                 print("Please enter a name to start")
                 continue
             
 
-            ready_start = input(f"Ready to start, {player_name}?(y/n):").lower()  
+            ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()  
             while ready_start not in ['y', 'n']:
                 print("Invalid input. Please enter 'y' or 'n'.")
-                ready_start = input(f"Ready to start, {player_name}?(y/n):").lower()
+                ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()
 
             if ready_start == "y":
                 print("Let's start the game!")
@@ -170,7 +173,7 @@ class Game:
 
             # Player's turn
             while player_hand.get_value() < 21:
-                choice = input("Hit or Stick? (h/s): ").lower()
+                choice = input("Hit or Stick? (h/s): \n").lower()
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand.display()
@@ -201,15 +204,15 @@ class Game:
                 print("Dealer WINS!")
 
             while True:
-                play_again = input("Want to play again? (y/n): ").lower()
+                play_again = input("Want to play again? (y/n): \n").lower()
                 if play_again == "y":
                     break
                 elif play_again == "n":
                     print("Thanks for playing!")
                     return
                 else:
-                    while play_again not in ["y" or "n"]:
-                        print("Invalid entry. Please enter 'y' or 'n'.")
+                    print("Invalid entry. Please enter 'y' or 'n'.\n")
+                        
 
 
 if __name__ == "__main__":
