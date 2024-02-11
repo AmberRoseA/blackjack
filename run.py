@@ -91,19 +91,15 @@ class Hand:
                 rows[1] += "|{} | ".format(card.face.ljust(2))
                 rows[2] += "| {} | ".format(card.suit)
                 rows[3] += "|_{}| ".format(card.face.rjust(2, "_"))
-                
-        print(f"{self.name}'s Hand")
-        for i, card in enumerate(self.cards):
-            if hide_dealer_first_card and i == 0:
-                print("?? Hidden Card ??")
-            else:
-                print(card)
+        
+        for row in rows:
+            print(row)
 
         if not hide_dealer_first_card:
             print("Total value:", self.get_value())
-            print()
-
-
+            print()  
+        
+        
 class Game:
     """ Class representing the Blackjack game.
     Asks for input of player name and if they are ready to play.
