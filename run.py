@@ -5,8 +5,7 @@ FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
 
 class Card:
-    """
-    Class to combine the suit and face,
+    """ Class to combine the suit and face,
     to show as one card
     """
     def __init__(self, suit, face):
@@ -18,8 +17,7 @@ class Card:
 
 
 class Deck:
-    """
-    A Class to represent the deck of cards.
+    """ A Class to represent the deck of cards.
     Making a 52 card deck
     Removes card from deck onces it has been dealt so does not deal again.
     """
@@ -28,16 +26,14 @@ class Deck:
         self.reset()
 
     def reset(self):
-        """
-        Reset the deck by creating a new set of cards.
+        """ Reset the deck by creating a new set of cards.
         Also shuffling them. 
         """
         self.cards = [Card(suit, face) for suit in SUITS for face in FACES]
         random.shuffle(self.cards)
 
     def deal(self):
-        """
-        Deals the cards from the deck,
+        """ Deals the cards from the deck,
         If deck becomes empty returns None.
         """
         if len(self.cards) > 0:
@@ -48,8 +44,7 @@ class Deck:
 
 
 class Hand:
-    """
-    Class to represent a hand of cards.
+    """ Class to represent a hand of cards.
     List to store cards in the hand.
     Name associated with the hand.
     """
@@ -61,8 +56,8 @@ class Hand:
         self.cards.append(card)
 
     def get_value(self):
-        """
-        Calculates the hands total value.
+        """ Calculates the hands total value.
+        Give number value to "A" "K" "Q" "J".
         """
         value = 0
         num_aces = 0
@@ -81,8 +76,7 @@ class Hand:
         return value
 
     def display(self, hide_dealer_first_card=False):
-        """
-        Displays the players hand
+        """ Displays the players hand
         Hides one card of dealers hand on initial first deal.
         """
         print(f"{self.name}'s Hand")
@@ -98,14 +92,13 @@ class Hand:
 
 
 class Game:
-    """
-    Class representing the Blackjack game.
+    """ Class representing the Blackjack game.
     Asks for input of player name and if they are ready to play.
     Ask player if they want to play again.
-    Starts the Game
-    creates rules for hit or stick 
+    Starts the Game, creates rules for hit or stick. 
     """
-    def print_msg_box(msg, indent=1, width=None, title=None): #This code was taken from stackoverflow.com link in README.md
+    # This code was taken from stackoverflow.com link in README.md
+    def print_msg_box(msg, indent=1, width=None, title=None):
         """Print message-box with optional title."""
         lines = msg.split('\n')
         space = " " * indent
@@ -118,12 +111,13 @@ class Game:
         box += ''.join([f'║{space}{line:<{width}}{space}║\n' for line in lines])
         box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
         print(box)
+        # This code was taken from stackoverflow.com link in README.md
 
-    msg = "The goal is to get as close to 21 as possible without going over.\n" \
-      "You'll be dealt two cards and can choose to Hit or Stick,\n" \
-      "Hit - You get delt another card,\n" \
-      "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
-      "Good Luck !"
+    msg = "The aim of the game: reach 21 without exceeding\n" \
+        "You'll be dealt two cards and can choose to Hit or Stick,\n" \
+        "Hit - You get delt another card,\n" \
+        "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
+        "Good Luck !" 
 
     print_msg_box(msg=msg, indent=5, title="Welcome to Blackjack Blast!:")
 
@@ -132,10 +126,9 @@ class Game:
         self.deck = Deck()
 
     def start_game(self):
-        """
-        Starts the game loop,
+        """ Starts the game loop,
         Ask for players name and if they are ready to start.
-        If entered invalid command will request again/ wont start game until done so.
+        If entered invalid command will request again/ wont start game.
         Deals cards, requests player enter information to hit or stick (h/s).
         Checks for winner of game or if a player got 21 or Bust.
         Asks player if they want to play again.
@@ -146,7 +139,6 @@ class Game:
                 print("Please enter a name to start")
                 continue
             
-
             ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()  
             while ready_start not in ['y', 'n']:
                 print("Invalid input. Please enter 'y' or 'n'.")
@@ -159,7 +151,6 @@ class Game:
                 break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
-            
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
 
@@ -211,8 +202,7 @@ class Game:
                     print("Thanks for playing!")
                     return
                 else:
-                    print("Invalid entry. Please enter 'y' or 'n'.\n")
-                        
+                    print("Invalid entry. Please enter 'y' or 'n'.\n")                       
 
 
 if __name__ == "__main__":
