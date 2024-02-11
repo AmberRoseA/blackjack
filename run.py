@@ -206,9 +206,10 @@ class Game:
                     break
                 elif play_again == "n":
                     print("Thanks for playing!")
-                    break
+                    return
                 else:
-                    print("Invalid entry. Please enter 'y' or 'n'.")
+                    while play_again not in ["y" or "n"]:
+                        print("Invalid entry. Please enter 'y' or 'n'.")
 
 
 if __name__ == "__main__":
