@@ -105,6 +105,29 @@ class Game:
     Starts the Game
     creates rules for hit or stick 
     """
+    def print_msg_box(msg, indent=1, width=None, title=None): #THis code was taken from 
+        """Print message-box with optional title."""
+        lines = msg.split('\n')
+        space = " " * indent
+        if not width:
+            width = max(map(len, lines))
+        box = f'╔{"═" * (width + indent * 2)}╗\n'  # upper_border
+        if title:
+            box += f'║{space}{title:<{width}}{space}║\n'  # title
+            box += f'║{space}{"-" * len(title):<{width}}{space}║\n'  # underscore
+        box += ''.join([f'║{space}{line:<{width}}{space}║\n' for line in lines])
+        box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
+        print(box)
+
+    msg = "The goal is to get as close to 21 as possible without going over.\n" \
+      "You'll be dealt two cards and can choose to Hit or Stick,\n" \
+      "Hit - You get delt another card,\n" \
+      "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
+      "Good Luck !"
+
+    print_msg_box(msg=msg, indent=5, title='Welcome to Blackjack Blast!:')
+
+
     def __init__(self):
         self.deck = Deck()
 
@@ -115,16 +138,11 @@ class Game:
         Deals cards, requests player enter information to hit or stick (h/s).
         """
         while True:
-            print("Welcome to Blackjack!")
-            print("The goal is to get as close to 21 as possible.")
-            print("You'll be dealt two cards and can choose to Hit or Stick.")
-
-            data_str = input("Enter your data here: \n")
-
-            player_name = input("Enter player's name: ")
+            player_name = input("Enter your name: ")
             if not player_name:
-                print("Please enter a name to start the game.")
+                print("Please enter a name to start")
                 continue
+            
 
             ready_start = input(f"Ready to start, {player_name}?(y/n):").lower()  
             while ready_start not in ['y', 'n']:
