@@ -27,7 +27,7 @@ class Deck:
 
     def reset(self):
         """ Reset the deck by creating a new set of cards.
-        Also shuffling them. 
+        Also shuffling them.
         """
         self.cards = [Card(suit, face) for suit in SUITS for face in FACES]
         random.shuffle(self.cards)
@@ -95,7 +95,7 @@ class Game:
     """ Class representing the Blackjack game.
     Asks for input of player name and if they are ready to play.
     Ask player if they want to play again.
-    Starts the Game, creates rules for hit or stick. 
+    Starts the Game, creates rules for hit or stick.
     """
     # This code was taken from stackoverflow.com link in README.md
     def print_msg_box(msg, indent=1, width=None, title=None):
@@ -107,8 +107,8 @@ class Game:
         box = f'╔{"═" * (width + indent * 2)}╗\n'  # upper_border
         if title:
             box += f'║{space}{title:<{width}}{space}║\n'  # title
-            box += f'║{space}{"-" * len(title):<{width}}{space}║\n'  # underscore
-        box += ''.join([f'║{space}{line:<{width}}{space}║\n' for line in lines])
+            box += f'║{space}{"-" * len(title):<{width}}{space}║\n'
+        box += ''.join([f'║{space}{line:<{width}}{space}║\n'for line in lines])
         box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
         print(box)
         # This code was taken from stackoverflow.com link in README.md
@@ -117,10 +117,9 @@ class Game:
         "You'll be dealt two cards and can choose to Hit or Stick,\n" \
         "Hit - You get delt another card,\n" \
         "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
-        "Good Luck !" 
+        "Good Luck !"
 
     print_msg_box(msg=msg, indent=5, title="Welcome to Blackjack Blast!:")
-
 
     def __init__(self):
         self.deck = Deck()
@@ -138,11 +137,11 @@ class Game:
             if not player_name:
                 print("Please enter a name to start")
                 continue
-            
-            ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()  
+
+            ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
             while ready_start not in ['y', 'n']:
                 print("Invalid input. Please enter 'y' or 'n'.")
-                ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()
+                ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
 
             if ready_start == "y":
                 print("Let's start the game!")
@@ -151,6 +150,7 @@ class Game:
                 break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
+
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
 
@@ -184,7 +184,7 @@ class Game:
 
             # Check winner
             if player_score > 21:
-                print("BUST! Dealer wins.")
+                print("You BUST! Dealer wins.")
             elif dealer_score > 21:
                 print("You WIN! Dealer BUST!")
             elif player_score == dealer_score:
@@ -202,7 +202,7 @@ class Game:
                     print("Thanks for playing!")
                     return
                 else:
-                    print("Invalid entry. Please enter 'y' or 'n'.\n")                       
+                    print("Invalid entry. Please enter 'y' or 'n'.\n")
 
 
 if __name__ == "__main__":
