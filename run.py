@@ -4,6 +4,29 @@ SUITS = ["♠", "♥", "♦", "♣"]
 FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
 
+def print_msg_box(msg, indent=0, width=None, title=None):
+    if title is not None:
+        size = len(title)
+        print("╔" + "═" * (size + 2) + "╗")
+        print("║ " + title + " ║")
+        print("╚" + "═" * (size + 2) + "╝")
+
+    lines = msg()
+    max_length = max(len(line) for line in lines)
+    if width is None:
+        width = max_length + 4
+
+    for line in lines:
+        spaces = " " * (width - len(line) - indent)
+        print(" " * indent + f"║ {line}{spaces} ║")
+
+    print("╚" + "═" * width + "╝")
+
+def dashed_underline(text):
+    """ Create dashed underline for the given text."""
+    underline = "--" * len(text)
+
+
 class Card:
     """ Class to combine the suit and face,
     to show as one card
@@ -40,7 +63,7 @@ class Deck:
             return self.cards.pop()
         else:
             print("No more cards in the deck.")
-            return None
+            return
 
 
 class Hand:
@@ -96,29 +119,12 @@ class Hand:
             print(row)
 
         if self.name:
-            print_msg_box(f"{self.name}'s Total:", self.get_value()) # revisit 
+            print(f"{self.name}'s Total:", self.get_value())
+            print() # revisit 
         if not hide_dealer_first_card:
-            print("Dealers Total:", self.get_value())
+            print("Dealer's Total:", self.get_value())
             print()  
-
-
-
-# This code was taken from stackoverflow.com link in README.md
-def print_msg_box(msg, indent=1, width=None, title=None):
-    """Print message-box with optional title."""
-    lines = msg.split('\n')
-    space = " " * indent
-    if not width:
-        width = max(map(len, lines))
-    box = f'╔{"═" * (width + indent * 2)}╗\n'  # upper_border
-    if title:
-        box += f'║{space}{title:<{width}}{space}║\n'  # title
-        box += f'║{space}{"-" * len(title):<{width}}{space}║\n'
-    box += ''.join([f'║{space}{line:<{width}}{space}║\n'for line in lines])
-    box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
-    print(box)
-    # This code was taken from stackoverflow.com link in README.md
-       
+     
 
 class Game:
     """ Class representing the Blackjack game.
@@ -126,18 +132,22 @@ class Game:
     Ask player if they want to play again.
     Starts the Game, creates rules for hit or stick.
     """
-    msg = "The aim of the game: reach 21 without exceeding\n" \
-        "You'll be dealt two cards and can choose to Hit or Stick,\n" \
-        "Hit - You get delt another card,\n" \
-        "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
-        "Good Luck !"
+    def msg():
+        return [
+            "The aim of the game: reach 21 without exceeding,
+            "You'll be dealt two cards and can choose to Hit or Stick,
+            "Hit - You get delt another card,
+            "Stick - Keep what you got and hope the Dealer doesnt get higher,
+            "Good Luck !"
+        ]
 
     print_msg_box(msg=msg, indent=5, title="♠ ♥ ♦ ♣ Welcome to Blackjack Blast! ♣ ♦ ♥ ♦ ♠")
 
     def __init__(self):
         self.deck = Deck()
 
-
+    def __init__(self):
+        self.hand = Hand()    
 
     def start_game(self):
         """ Starts the game loop,
@@ -151,7 +161,7 @@ class Game:
             player_name = input("Enter your name: \n")
             if not player_name:
                 print("Please enter a name to start")
-                continue
+                """continue"""
 
             ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
             while ready_start not in ['y', 'n']:
@@ -164,7 +174,7 @@ class Game:
                 print_msg_box('\nMaybe next time. Goodbye!\n', indent=10)
                 break
             else:
-                print("Invalid input. Please enter 'y' or 'n'.")
+                print("Invalid input. Please enter 'y' or 'n'." + underline)
 
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
