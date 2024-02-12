@@ -97,8 +97,13 @@ class Hand:
 
         if not hide_dealer_first_card:
             print("Total value:", self.get_value())
-            print()  
-     
+            print()
+
+
+class Layout:
+    """Class made to manipulate layout of the functions on the,
+    screen, instead of generating from the bottom.
+    """
 
 class Game:
     """ Class representing the Blackjack game.
@@ -128,16 +133,11 @@ class Game:
         "Stick - Keep what you got and hope the Dealer doesnt get higher.\n" \
         "Good Luck !"
 
-    print_msg_box(msg=msg, indent=5, title="Welcome to Blackjack Blast!:")
+    print_msg_box(msg=msg, indent=5, title="♠ ♥ ♦ ♣ Welcome to Blackjack Blast! ♣ ♦ ♥ ♦ ♠")
 
     def __init__(self):
         self.deck = Deck()
     
-    def display_hands(player_hand, dealer_hand):
-        """ Change layout so players hand and dealers hand are next to,
-        each other left to right of the screen
-        """
-        
 
     def start_game(self):
         """ Starts the game loop,
