@@ -79,9 +79,8 @@ class Hand:
         """ Displays the players hand
         Hides one card of dealers hand on initial first deal.
         """
-        player_rows = ["", "", "", "", ""]  # Text to display player's hand
-        dealer_rows = ["", "", "", "", ""]  # Text to display dealer's hand
-  
+        rows = ["", "", "", "", ""]  
+
         for card in self.cards:
             rows[0] += " ___  "  # Top line of card.
             if hide_dealer_first_card and card == self.cards[0]:
@@ -133,6 +132,12 @@ class Game:
 
     def __init__(self):
         self.deck = Deck()
+    
+    def display_hands(player_hand, dealer_hand):
+        """ Change layout so players hand and dealers hand are next to,
+        each other left to right of the screen
+        """
+        
 
     def start_game(self):
         """ Starts the game loop,
