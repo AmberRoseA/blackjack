@@ -79,8 +79,9 @@ class Hand:
         """ Displays the players hand
         Hides one card of dealers hand on initial first deal.
         """
-        rows = ["", "", "", "", ""]  # Text to display on each row.
-
+        player_rows = ["", "", "", "", ""]  # Text to display player's hand
+        dealer_rows = ["", "", "", "", ""]  # Text to display dealer's hand
+  
         for card in self.cards:
             rows[0] += " ___  "  # Top line of card.
             if hide_dealer_first_card and card == self.cards[0]:
@@ -98,18 +99,7 @@ class Hand:
         if not hide_dealer_first_card:
             print("Total value:", self.get_value())
             print()  
-
-        print(f"{self.name}'s Hand")
-        for i, card in enumerate(self.cards):
-            if hide_dealer_first_card and i == 0:
-                print("?? Hidden Card ??")
-            else:
-                print(card)
-
-        if not hide_dealer_first_card:
-            print("Total value:", self.get_value())
-            print()    
-        
+     
 
 class Game:
     """ Class representing the Blackjack game.
