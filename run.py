@@ -1,5 +1,4 @@
 import random
-import shutil
 
 SUITS = ["♠", "♥", "♦", "♣"]
 FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -80,7 +79,7 @@ class Hand:
         """ Displays the players hand
         Hides one card of dealers hand on initial first deal.
         """
-        rows = ["", "", "", "", ""]  
+        rows = ["", "", "", "", ""]  # Text to display on each row.
 
         for card in self.cards:
             rows[0] += " ___  "  # Top line of card.
@@ -98,8 +97,26 @@ class Hand:
 
         if not hide_dealer_first_card:
             print("Total value:", self.get_value())
-            print()
+            print()  
 
+
+
+# This code was taken from stackoverflow.com link in README.md
+def print_msg_box(msg, indent=1, width=None, title=None):
+    """Print message-box with optional title."""
+    lines = msg.split('\n')
+    space = " " * indent
+    if not width:
+        width = max(map(len, lines))
+    box = f'╔{"═" * (width + indent * 2)}╗\n'  # upper_border
+    if title:
+        box += f'║{space}{title:<{width}}{space}║\n'  # title
+        box += f'║{space}{"-" * len(title):<{width}}{space}║\n'
+    box += ''.join([f'║{space}{line:<{width}}{space}║\n'for line in lines])
+    box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
+    print(box)
+    # This code was taken from stackoverflow.com link in README.md
+       
 
 class Game:
     """ Class representing the Blackjack game.
@@ -107,22 +124,6 @@ class Game:
     Ask player if they want to play again.
     Starts the Game, creates rules for hit or stick.
     """
-    # This code was taken from stackoverflow.com link in README.md
-    def print_msg_box(msg, indent=1, width=None, title=None):
-        """Print message-box with optional title."""
-        lines = msg.split('\n')
-        space = " " * indent
-        if not width:
-            width = max(map(len, lines))
-        box = f'╔{"═" * (width + indent * 2)}╗\n'  # upper_border
-        if title:
-            box += f'║{space}{title:<{width}}{space}║\n'  # title
-            box += f'║{space}{"-" * len(title):<{width}}{space}║\n'
-        box += ''.join([f'║{space}{line:<{width}}{space}║\n'for line in lines])
-        box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
-        print(box)
-        # This code was taken from stackoverflow.com link in README.md
-
     msg = "The aim of the game: reach 21 without exceeding\n" \
         "You'll be dealt two cards and can choose to Hit or Stick,\n" \
         "Hit - You get delt another card,\n" \
@@ -133,7 +134,6 @@ class Game:
 
     def __init__(self):
         self.deck = Deck()
-    
 
     def start_game(self):
         """ Starts the game loop,
@@ -155,7 +155,7 @@ class Game:
                 ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
 
             if ready_start == "y":
-                print("Let's start the game!")
+                print_msg_box('\nLets Play !\n', indent=10)
             elif ready_start == "n":
                 print("Maybe next time. Goodbye!")
                 break
@@ -173,10 +173,9 @@ class Game:
             player_hand.display()
             dealer_hand.display(hide_dealer_first_card=True)
 
-
             # Player's turn
             while player_hand.get_value() < 21:
-                choice = input("Hit or Stick? (h/s): \n").lower()
+                print_msg_box("\nHit or Stick? (h/s): \n", indent=).lower() # gotts make this a choice again dont forget 
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand.display()
@@ -220,3 +219,4 @@ class Game:
 if __name__ == "__main__":
     game = Game()
     game.start_game()
+
