@@ -104,6 +104,39 @@ class Layout:
     """Class made to manipulate layout of the functions on the,
     screen, instead of generating from the bottom.
     """
+    @staticmethod
+    def display_player_and_dealer(player_hand, dealer_hand):
+        """ Display player and dealer hands side by side with space in between."""
+        player_rows = ["", "", "", "", ""]
+        dealer_rows = ["", "", "", "", ""]
+        
+        player_cards = player_hand.cards
+        dealer_cards = dealer_hand.cards
+        
+        # Display player's cards
+        for card in player_cards:
+            player_rows[0] += " ___  "
+            player_rows[1] += "|{} | ".format(card.face.ljust(2))
+            player_rows[2] += "| {} | ".format(card.suit)
+            player_rows[3] += "|_{}| ".format(card.face.rjust(2, "_"))
+        
+        # Display dealer's cards
+        for i, card in enumerate(dealer_cards):
+            dealer_rows[0] += " ___  "
+            if i == 0:  # Hide first card
+                dealer_rows[1] += "|XX | "
+                dealer_rows[2] += "|XXX| "
+                dealer_rows[3] += "|_XX| "
+            else:
+                dealer_rows[1] += "|{} | ".format(card.face.ljust(2))
+                dealer_rows[2] += "| {} | ".format(card.suit)
+                dealer_rows[3] += "|_{}| ".format(card.face.rjust(2, "_"))
+        
+        # Print the rows
+        for player_row, dealer_row in zip(player_rows, dealer_rows):
+            print(player_row + "    " + dealer_row)
+        print("Player Total:", player_hand.get_value(), " " * 10, "Dealer Total:", dealer_hand.get_value())
+
 
 class Game:
     """ Class representing the Blackjack game.
@@ -174,6 +207,7 @@ class Game:
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
+            Layout.display_player_and_dealer(player_hand, dealer_hand)
             player_hand.display()
             dealer_hand.display(hide_dealer_first_card=True)
 
