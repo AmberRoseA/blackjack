@@ -95,8 +95,10 @@ class Hand:
         for row in rows:
             print(row)
 
+        if self.name:
+            print_msg_box(f"{self.name}'s Total:", self.get_value()) # revisit 
         if not hide_dealer_first_card:
-            print("Total value:", self.get_value())
+            print("Dealers Total:", self.get_value())
             print()  
 
 
@@ -135,6 +137,8 @@ class Game:
     def __init__(self):
         self.deck = Deck()
 
+
+
     def start_game(self):
         """ Starts the game loop,
         Ask for players name and if they are ready to start.
@@ -157,14 +161,13 @@ class Game:
             if ready_start == "y":
                 print_msg_box('\nLets Play !\n', indent=10)
             elif ready_start == "n":
-                print("Maybe next time. Goodbye!")
+                print_msg_box('\nMaybe next time. Goodbye!\n', indent=10)
                 break
             else:
                 print("Invalid input. Please enter 'y' or 'n'.")
 
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
-
             # Deal first two cards
             for _ in range(2):
                 player_hand.add_card(self.deck.deal())
@@ -175,7 +178,7 @@ class Game:
 
             # Player's turn
             while player_hand.get_value() < 21:
-                print_msg_box("\nHit or Stick? (h/s): \n", indent=).lower() # gotts make this a choice again dont forget 
+                choice = input("Hit or Stick? (h/s): \n").lower()
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand.display()
@@ -195,15 +198,15 @@ class Game:
 
             # Check winner
             if player_score > 21:
-                print("You BUST! Dealer wins.")
+                print_msg_box('\nYou BUST! Dealer wins.\n', indent=10)
             elif dealer_score > 21:
-                print("You WIN! Dealer BUST!")
+                print_msg_box('\nYou WIN! Dealer BUST!\n', indent=10)
             elif player_score == dealer_score:
-                print("Tied game.")
+                print_msg_box('\nTied game.\n', indent=10)
             elif player_score > dealer_score:
-                print("YOU WIN!")
+                print_msg_box('\nYOU WIN!\n', indent=10)
             else:
-                print("Dealer WINS!")
+                print_msg_box('\nDealer WINS!\n', indent=10)
 
             while True:
                 play_again = input("Want to play again? (y/n): \n").lower()
