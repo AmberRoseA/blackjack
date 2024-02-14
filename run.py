@@ -116,8 +116,10 @@ class Hand:
 
         if not hide_dealer_first_card:
             print("Total value:", self.get_value())
+        else:
+            print("Total value: ????")
             print()
-
+        
 
 class Game:
     """ Class representing the Blackjack game.
@@ -160,11 +162,11 @@ class Game:
             ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
 
         if ready_start == "n":
-            print_msg_box('\nMaybe next time. Goodbye!\n', indent=8)
+            print_msg_box(msg="BYE", indent=8)
             return
 
         elif ready_start == "y":
-            print_msg_box(msg="LETS PLAY", indent=10)
+            print_msg_box(msg="LETS PLAY", indent=5)
 
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
@@ -176,9 +178,13 @@ class Game:
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
+            print(f"{player_name}'s Hand:")
             player_hand.display()
+
+            print("Dealer's Hand:")
             dealer_hand.display(hide_dealer_first_card=True)
-            
+    
+
             player_hand_value = player_hand.get_value()
             dealer_hand_value = dealer_hand.get_value()
 
@@ -188,41 +194,43 @@ class Game:
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand_value = player_hand.get_value()
-                    print(f"{player_hand.name}'s Hand:")
-                    for card in player_hand.cards:
-                        print(card)
-                    print("Total value:", player_hand_value)
+                    print(f"{player_name}'s Hand:")
+                    player_hand.display()
                 elif choice == "s":
                     break
                 else:
                     print("Invalid entry! \n")
 
             # Dealer's turn
-            while dealer_hand_value < 17:
-                dealer_hand.add_card(self.deck.deal())
-                dealer_hand_value = dealer_hand.get_value()
+            if player_hand_value <= 21:
+                while dealer_hand_value < 17:
+                    dealer_hand.add_card(self.deck.deal())
+                    dealer_hand_value = dealer_hand.get_value()
 
-            print("Dealer's Hand:")
-            for card in dealer_hand.cards:
-                print(card)
-            print("Total value:", dealer_hand_value)
+                print("Dealer's Hand:")
+                dealer_hand.display()
 
             # Check winner
             if player_hand_value > 21:
-                print_msg_box('\nYou BUST! Dealer wins.\n', indent=10)
+                print("========You BUST! Dealer wins.========")
             elif dealer_hand_value > 21:
-                print_msg_box('\nYou WIN! Dealer BUST!\n', indent=10)
+                print("========You WIN! Dealer BUST!========")
             elif player_hand_value == dealer_hand_value:
-                print_msg_box('\nTied game.\n', indent=10)
+                print("========Tied game========")
             elif player_hand_value > dealer_hand_value:
-                print_msg_box('\nYOU WIN!\n', indent=10)
+                print("========YOU WIN!========")    
             else:
-                print_msg_box('\nDealer WINS!\n', indent=10)
+                print("========Dealer WINS!========")
 
-            play_again = input("Want to play again? (y/n): \n").lower()
-            if play_again == "n":
-                print("Thanks for playing!")
-                return
+            while True:
+                play_again = input("Want to play again? (y/n): \n").lower()
+                if play_again == "y":
+                    break
+                elif play_again == "n":
+                    print("Thanks for playing!")
+                    return
+                else:
+                    print("Invalid entry. Please enter 'y' or 'n'.\n")
 
 
 if __name__ == "__main__":
