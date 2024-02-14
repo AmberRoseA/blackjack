@@ -1,4 +1,5 @@
 import random
+import os
 
 SUITS = ["♠", "♥", "♦", "♣"]
 FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -130,6 +131,8 @@ class Game:
     def __init__(self):
         self.deck = Deck()
     
+    def clear_screen(self):
+        os.systems('cls' if os.name == 'nt' else 'clear')
 
     def start_game(self):
         """ Starts the game loop,
@@ -156,10 +159,10 @@ class Game:
             else:
                 break
 
-        ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
+        ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()
         while ready_start not in ['y', 'n']:
             print("Invalid input. Please enter 'y' or 'n'.")
-            ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
+            ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()
 
         if ready_start == "n":
             print_msg_box(msg="BYE", indent=8)
@@ -178,10 +181,10 @@ class Game:
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
-            print(f"{player_name}'s Hand:")
+            print(f"-------{player_name}'s Hand:-------")
             player_hand.display()
 
-            print("Dealer's Hand:")
+            print("-------Dealer's Hand:-------")
             dealer_hand.display(hide_dealer_first_card=True)
     
 
@@ -194,7 +197,6 @@ class Game:
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand_value = player_hand.get_value()
-                    print(f"{player_name}'s Hand:")
                     player_hand.display()
                 elif choice == "s":
                     break
@@ -207,7 +209,6 @@ class Game:
                     dealer_hand.add_card(self.deck.deal())
                     dealer_hand_value = dealer_hand.get_value()
 
-                print("Dealer's Hand:")
                 dealer_hand.display()
 
             # Check winner
@@ -228,6 +229,7 @@ class Game:
                     break
                 elif play_again == "n":
                     print("Thanks for playing!")
+                    print_msg_box(msg="BYE", indent=8)
                     return
                 else:
                     print("Invalid entry. Please enter 'y' or 'n'.\n")
