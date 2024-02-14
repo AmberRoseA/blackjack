@@ -132,7 +132,7 @@ class Game:
         self.deck = Deck()
     
     def clear_screen(self):
-        os.systems('cls' if os.name == 'nt' else 'clear')
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def start_game(self):
         """ Starts the game loop,
@@ -197,6 +197,7 @@ class Game:
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
                     player_hand_value = player_hand.get_value()
+                    print(f"-------{player_name}'s Hand:-------")
                     player_hand.display()
                 elif choice == "s":
                     break
@@ -208,7 +209,7 @@ class Game:
                 while dealer_hand_value < 17:
                     dealer_hand.add_card(self.deck.deal())
                     dealer_hand_value = dealer_hand.get_value()
-
+                print("-------Dealer's Hand:-------")
                 dealer_hand.display()
 
             # Check winner
