@@ -92,7 +92,7 @@ class Hand:
         while value > 21 and num_aces:
             value -= 10
             num_aces -= 1
-        return value    
+        return value
     
     def display(self, hide_dealer_first_card=False):
         """ Displays the players hand
@@ -114,6 +114,10 @@ class Hand:
         for row in rows:
             print(row)
 
+        if not hide_dealer_first_card:
+            print("Total value:", self.get_value())
+            print()
+
 
 class Game:
     """ Class representing the Blackjack game.
@@ -123,6 +127,7 @@ class Game:
     """
     def __init__(self):
         self.deck = Deck()
+    
 
     def start_game(self):
         """ Starts the game loop,
@@ -171,17 +176,11 @@ class Game:
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
+            player_hand.display()
+            dealer_hand.display(hide_dealer_first_card=True)
+            
             player_hand_value = player_hand.get_value()
             dealer_hand_value = dealer_hand.get_value()
-
-            print(f"{player_hand.name}'s Hand:")
-            for card in player_hand.cards:
-                print(card)
-            print("Total value:", player_hand_value)
-
-            print("Dealer's Hand:")
-            print(dealer_hand.cards[0])  # Only show the first card of dealer's hand
-            print("Total value: ?")
 
             # Player's turn
             while player_hand_value < 21:
