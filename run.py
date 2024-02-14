@@ -224,16 +224,17 @@ class Game:
             else:
                 print("========Dealer WINS!========")
 
-            while True:
-                play_again = input("Want to play again? (y/n): \n").lower()
-                if play_again == "y":
-                    break
-                elif play_again == "n":
-                    print("Thanks for playing!")
-                    print_msg_box(msg="BYE", indent=8)
-                    return
-                else:
-                    print("Invalid entry. Please enter 'y' or 'n'.\n")
+        while True:
+            play_again = input("Want to play again? (y/n): \n").lower()
+            if play_again == "y":
+                os.system('cls' if os.name == 'nt' else 'clear')
+                break
+            elif play_again == "n":
+                print("Thanks for playing!")
+                print_msg_box(msg="BYE", indent=8)
+                return
+            else:
+                print("Invalid entry. Please enter 'y' or 'n'.\n")
 
 
 if __name__ == "__main__":
