@@ -8,22 +8,6 @@ exports.install = function () {
 
 };
 
-function socket() {
-
-    this.encodedecode = false;
-    this.autodestroy();
-
-    this.on('open', function (client) {
-
-        // Spawn terminal
-        client.tty = Pty.spawn('python3', ['run.py'], {
-            name: 'xterm-color',
-            cols: 80,
-            rows: 24,
-            cwd: process.env.PWD,
-            env: process.env
-        });
-
         client.tty.on('exit', function (code, signal) {
             client.tty = null;
             client.close();
@@ -46,15 +30,5 @@ function socket() {
 
     this.on('message', function (client, msg) {
         client.tty && client.tty.write(msg);
-    });
-}
-
-if (process.env.CREDS != null) {
-    console.log("Creating creds.json file.");
-    fs.writeFile('creds.json', process.env.CREDS, 'utf8', function (err) {
-        if (err) {
-            console.log('Error writing file: ', err);
-            socket.emit("console_output", "Error saving credentials: " + err);
-        }
     });
 }

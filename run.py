@@ -4,27 +4,25 @@ SUITS = ["♠", "♥", "♦", "♣"]
 FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
 
-def print_msg_box(msg, indent=0, width=None, title=None):
-    if title is not None:
-        size = len(title)
-        print("╔" + "═" * (size + 2) + "╗")
-        print("║ " + title + " ║")
-        print("╚" + "═" * (size + 2) + "╝")
-
-    lines = msg()
-    max_length = max(len(line) for line in lines)
-    if width is None:
-        width = max_length + 4
-
+def print_msg_box(msg=None, indent=0, width=None, title=None):
+    """Print message-box with optional title."""
+    lines = msg
+    space = " " * indent
+    if not width:
+        width = max(len(line) for line in lines)
+    box = f'╔{"═" * (width + indent * 2)}╗\n'  # upper_border
+    if title:
+        box += f'║{space}{title:<{width}}{space}║\n'  # title
+        box += f'║{space}{"-" * len(title):<{width}}{space}║\n'
     for line in lines:
-        spaces = " " * (width - len(line) - indent)
-        print(" " * indent + f"║ {line}{spaces} ║")
+        box += f'║{space}{line.ljust(width)}{space}║\n'
+    box += f'╚{"═" * (width + indent * 2)}╝'  # lower_border
+    print(box)
 
-    print("╚" + "═" * width + "╝")
 
 def dashed_underline(text):
     """ Create dashed underline for the given text."""
-    underline = "--" * len(text)
+    return "--" * len(text)
 
 
 class Card:
@@ -34,7 +32,7 @@ class Card:
     def __init__(self, suit, face):
         self.suit = suit
         self.face = face
-
+    
     def __str__(self):
         return f"{self.face} {self.suit}"
 
@@ -46,12 +44,11 @@ class Deck:
     """
     def __init__(self):
         self.cards = []
-        self.reset()
 
-    def reset(self):
-        """ Reset the deck by creating a new set of cards.
-        Also shuffling them.
-        """
+    def shuffle_deck(self):
+        """ Shuffling the deck which resets them, 
+        by creating a new set of cards.
+        """ 
         self.cards = [Card(suit, face) for suit in SUITS for face in FACES]
         random.shuffle(self.cards)
 
@@ -92,12 +89,11 @@ class Hand:
                 num_aces += 1
             else:
                 value += int(card.face)
-
         while value > 21 and num_aces:
             value -= 10
             num_aces -= 1
-        return value
-
+        return value    
+    
     def display(self, hide_dealer_first_card=False):
         """ Displays the players hand
         Hides one card of dealers hand on initial first deal.
@@ -118,13 +114,6 @@ class Hand:
         for row in rows:
             print(row)
 
-        if self.name:
-            print(f"{self.name}'s Total:", self.get_value())
-            print() # revisit 
-        if not hide_dealer_first_card:
-            print("Dealer's Total:", self.get_value())
-            print()  
-     
 
 class Game:
     """ Class representing the Blackjack game.
@@ -132,22 +121,8 @@ class Game:
     Ask player if they want to play again.
     Starts the Game, creates rules for hit or stick.
     """
-    def msg():
-        return [
-            "The aim of the game: reach 21 without exceeding,
-            "You'll be dealt two cards and can choose to Hit or Stick,
-            "Hit - You get delt another card,
-            "Stick - Keep what you got and hope the Dealer doesnt get higher,
-            "Good Luck !"
-        ]
-
-    print_msg_box(msg=msg, indent=5, title="♠ ♥ ♦ ♣ Welcome to Blackjack Blast! ♣ ♦ ♥ ♦ ♠")
-
     def __init__(self):
         self.deck = Deck()
-
-    def __init__(self):
-        self.hand = Hand()    
 
     def start_game(self):
         """ Starts the game loop,
@@ -157,79 +132,100 @@ class Game:
         Checks for winner of game or if a player got 21 or Bust.
         Asks player if they want to play again.
         """
+        intro_box = [
+            "The aim of the game: reach 21 without exceeding",
+            "You'll be dealt two cards and can choose to Hit or Stick",
+            "Hit - You get delt another card",
+            "Stick - Keep what you got and hope the Dealer doesnt get higher",
+            "Good Luck !"
+            ]
+
+        print_msg_box(msg=intro_box, indent=5, title="♠ ♥ ♦ ♣ Welcome to Blackjack Blast! ♣ ♦ ♥ ♦ ♠")
+
         while True:
             player_name = input("Enter your name: \n")
             if not player_name:
-                print("Please enter a name to start")
-                """continue"""
-
-            ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
-            while ready_start not in ['y', 'n']:
-                print("Invalid input. Please enter 'y' or 'n'.")
-                ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
-
-            if ready_start == "y":
-                print_msg_box('\nLets Play !\n', indent=10)
-            elif ready_start == "n":
-                print_msg_box('\nMaybe next time. Goodbye!\n', indent=10)
-                break
+                print("Please enter a name to start: \n")
             else:
-                print("Invalid input. Please enter 'y' or 'n'." + underline)
+                break
+
+        ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
+        while ready_start not in ['y', 'n']:
+            print("Invalid input. Please enter 'y' or 'n'.")
+            ready_start = input(f"Ready to start, {player_name}?(y/n):\n")
+
+        if ready_start == "n":
+            print_msg_box('\nMaybe next time. Goodbye!\n', indent=8)
+            return
+
+        elif ready_start == "y":
+            print_msg_box(msg="LETS PLAY", indent=10)
 
             player_hand = Hand(player_name)
             dealer_hand = Hand("Dealer")
+
+            self.deck.shuffle_deck()
+
             # Deal first two cards
             for _ in range(2):
                 player_hand.add_card(self.deck.deal())
                 dealer_hand.add_card(self.deck.deal())
 
-            player_hand.display()
-            dealer_hand.display(hide_dealer_first_card=True)
+            player_hand_value = player_hand.get_value()
+            dealer_hand_value = dealer_hand.get_value()
+
+            print(f"{player_hand.name}'s Hand:")
+            for card in player_hand.cards:
+                print(card)
+            print("Total value:", player_hand_value)
+
+            print("Dealer's Hand:")
+            print(dealer_hand.cards[0])  # Only show the first card of dealer's hand
+            print("Total value: ?")
 
             # Player's turn
-            while player_hand.get_value() < 21:
+            while player_hand_value < 21:
                 choice = input("Hit or Stick? (h/s): \n").lower()
                 if choice == "h":
                     player_hand.add_card(self.deck.deal())
-                    player_hand.display()
+                    player_hand_value = player_hand.get_value()
+                    print(f"{player_hand.name}'s Hand:")
+                    for card in player_hand.cards:
+                        print(card)
+                    print("Total value:", player_hand_value)
                 elif choice == "s":
                     break
                 else:
-                    print("Invalid entry!")
+                    print("Invalid entry! \n")
 
-            player_score = player_hand.get_value()
             # Dealer's turn
-            dealer_hand.display()
-            while dealer_hand.get_value() < 17:
+            while dealer_hand_value < 17:
                 dealer_hand.add_card(self.deck.deal())
-                dealer_hand.display()
+                dealer_hand_value = dealer_hand.get_value()
 
-            dealer_score = dealer_hand.get_value()
+            print("Dealer's Hand:")
+            for card in dealer_hand.cards:
+                print(card)
+            print("Total value:", dealer_hand_value)
 
             # Check winner
-            if player_score > 21:
+            if player_hand_value > 21:
                 print_msg_box('\nYou BUST! Dealer wins.\n', indent=10)
-            elif dealer_score > 21:
+            elif dealer_hand_value > 21:
                 print_msg_box('\nYou WIN! Dealer BUST!\n', indent=10)
-            elif player_score == dealer_score:
+            elif player_hand_value == dealer_hand_value:
                 print_msg_box('\nTied game.\n', indent=10)
-            elif player_score > dealer_score:
+            elif player_hand_value > dealer_hand_value:
                 print_msg_box('\nYOU WIN!\n', indent=10)
             else:
                 print_msg_box('\nDealer WINS!\n', indent=10)
 
-            while True:
-                play_again = input("Want to play again? (y/n): \n").lower()
-                if play_again == "y":
-                    break
-                elif play_again == "n":
-                    print("Thanks for playing!")
-                    return
-                else:
-                    print("Invalid entry. Please enter 'y' or 'n'.\n")
+            play_again = input("Want to play again? (y/n): \n").lower()
+            if play_again == "n":
+                print("Thanks for playing!")
+                return
 
 
 if __name__ == "__main__":
     game = Game()
     game.start_game()
-
