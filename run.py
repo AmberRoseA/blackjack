@@ -1,12 +1,14 @@
 import random
 import os
+import sys
 
 SUITS = ["♠", "♥", "♦", "♣"]
 FACES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
 
 def print_box(msg=None, indent=0, width=None, title=None):
-    """Print message-box with optional title."""
+    """Print message-box with optional title.
+    Not my original code from"""
     lines = msg
     space = " " * indent
     if not width:
@@ -142,7 +144,7 @@ class Game:
         "Good Luck !"
         ]
 
-    print_box(msg=intro_box, indent=5, title="♠ ♥ ♦ ♣ Blackjack Blast! ♣ ♦ ♥ ♦ ♠")
+    print_box(msg=intro_box, indent=5, title="♠ ♥ ♦ ♣BlackjackBlast!♣ ♦ ♥ ♦ ♠")
 
     def start_game(self):
         """ Starts the game loop,
@@ -162,13 +164,11 @@ class Game:
         ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()
         while ready_start not in ['y', 'n']:
             print("Invalid input. Please enter 'y' or 'n'.")
-            return
-        ready_start = input(f"Ready to start, {player_name}?(y/n):\n").lower()
+            ready_start = input(f"Ready to start ? (y/n):\n").lower()
 
         if ready_start == "n":
             print_box(msg="BYE", indent=8)
-            return
-
+            sys.exit(0)
         elif ready_start == "y":
             print_box(msg="LETS PLAY", indent=5)
 
@@ -223,20 +223,21 @@ class Game:
                 print("========YOU WIN!========")
             else:
                 print("========Dealer WINS!========")
-
-        while True:
-            play_again = input("Want to play again? (y/n): \n").lower()
-            if play_again == "y":
-                os.system('cls' if os.name == 'nt' else 'clear')
-                break
-            elif play_again == "n":
-                print("Thanks for playing!")
-                print_box(msg="BYE", indent=8)
-                return
-            else:
-                print("Invalid entry. Please enter 'y' or 'n'.\n")
+        return
 
 
 if __name__ == "__main__":
-    game = Game()
-    game.start_game()
+    while True:
+        game = Game()
+        game.start_game()
+        while True:
+            play_again = input("Want to play again? (y/n): \n").lower()
+            if play_again not in ['y', 'n']:
+                print("Invalid entry. Please enter 'y' or 'n'.\n")
+            elif play_again == "n":
+                print("Thanks for playing!")
+                print_box(msg="BYE", indent=8)
+                sys.exit(0)
+            else:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                break
